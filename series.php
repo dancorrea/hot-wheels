@@ -21,11 +21,10 @@ require './pages/header.php';
     </a>
 
     <?php
-
     if ($stmt->rowCount() > 0) {
     ?>
-        <div class="col-6">
-            <table class="table table-hover mt-4">
+        <div class="col-6 mb-5">
+            <table class="table table-hover mt-4 mb-5">
                 <thead>
                     <tr>
                         <th scope="col">Série</th>

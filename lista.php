@@ -7,7 +7,13 @@ if (!$_SESSION['log']) {
     header("Location: index.php");
 }
 
-$stmt = $pdo->prepare('SELECT * FROM clientes');
+$stmt = $pdo->prepare('
+    SELECT s.colecao, i.marca, i.modelo, i.ano, i.cor, i.numero  
+    FROM item AS i 
+    INNER JOIN serie as s 
+    ON i.colecao = s.id
+    ORDER BY i.marca, i.modelo;
+');
 $stmt->execute();
 
 require './pages/header.php';
@@ -21,32 +27,34 @@ require './pages/header.php';
 
     if ($stmt->rowCount() > 0) {
     ?>
-        <table class="table table-hover mt-5">
-            <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Funções</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($stmt->fetchAll() as $client) {
-                    echo "<tr>";
-                    echo "<td>" . $client['name'] . "</td>";
-                    echo "<td>" . $client['cpf'] . "</td>";
-                    echo "<td>" . $client['tel'] . "</td>";
-                    echo "<td>" . $client['email'] . "</td>";
-                    echo "<td>" . date('d/m/y', strtotime($client['date'])) . "</td>";
-                    echo "<td><a href='editar.php?cliente=" . $client['id'] . "' class='btn btn-sm btn-secondary'>Editar</a></td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+        <div class="col-12 mb-5">
+            <table class="table table-hover mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Coleção</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Ano</th>
+                        <th scope="col">Cor</th>
+                        <th scope="col">Número</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($stmt->fetchAll() as $item) {
+                        echo "<tr>";
+                        echo "<td>" . $item['colecao'] . "</td>";
+                        echo "<td>" . $item['marca'] . "</td>";
+                        echo "<td>" . $item['modelo'] . "</td>";
+                        echo "<td>" . $item['ano'] . "</td>";
+                        echo "<td>" . $item['cor'] . "</td>";
+                        echo "<td>" . $item['numero'] . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
     <?php
     } else {
