@@ -8,7 +8,7 @@ if (isset($_SESSION['log']) || !empty($_SESSION['log'])) {
 if (!empty($_POST)) {
     $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-    if (password_verify('#Digital6', $pass)) {
+    if (password_verify('pass', $pass)) {
         $_SESSION['log'] = true;
         header("Location: lista.php");
     } else {
