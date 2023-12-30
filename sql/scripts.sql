@@ -1,0 +1,1 @@
+CREATE TABLE `hotwheels`.`serie` ( `id` INT NOT NULL AUTO_INCREMENT , `colecao` VARCHAR(250) NOT NULL , `total` INT(3) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
